@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import './index.css';
-import Navbar from './components/Navbar';
+import "./index.css";
+import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Authentication from './components/Authentication'; // Updated import
-
-// Import the user dashboard and admin dashboard components
-import HomePage from './components/HomePage';
-import AuctioneerDashboard from './pages/AuctioneerDashboard';
-import ClientDashboard from './pages/ClientDashboard';
-import AdminDashboard from './pages/AdminDashboard'; // Import the existing AdminDashboard
+import Authentication from "./components/Authentication";
+import HomePage from "./components/HomePage";
+import AuctioneerDashboard from "./pages/AuctioneerDashboard";
+import ClientDashboard from "./pages/ClientDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import AboutUs from "./components/AboutUs"; // Import the AboutUs component
 
 const App = () => {
   const [userRole, setUserRole] = useState(null);
-  
+
   useEffect(() => {
     const token = localStorage.getItem("access_token");
 
@@ -42,10 +41,10 @@ const App = () => {
     <Router>
       <div className="min-h-screen bg-gray-100">
         {userRole && <Navbar userRole={userRole} handleLogout={handleLogout} />}
-        
+
         <main className="mx-auto">
           <Routes>
-            {/* Set HomePage as the default route */}
+            {/* HomePage as the default route */}
             <Route
               path="/"
               element={<HomePage userRole={userRole} handleLogout={handleLogout} />}
@@ -57,14 +56,14 @@ const App = () => {
                 userRole ? (
                   <Navigate to={`/${userRole}-dashboard`} />
                 ) : (
-                  <Authentication setUserRole={setUserRole} /> // Use Authentication component here
+                  <Authentication setUserRole={setUserRole} />
                 )
               }
             />
 
             <Route
               path="/registration"
-              element={<Authentication setUserRole={setUserRole} />} // Use Authentication component here as well
+              element={<Authentication setUserRole={setUserRole} />}
             />
 
             <Route
@@ -81,6 +80,9 @@ const App = () => {
               path="/client-dashboard"
               element={userRole === "client" ? <ClientDashboard /> : <Navigate to="/" />}
             />
+
+            {/* About Us route */}
+            <Route path="/about-us" element={<AboutUs />} />
           </Routes>
         </main>
       </div>
