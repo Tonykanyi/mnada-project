@@ -85,17 +85,22 @@ const Authentication = ({ setUserRole }) => {
     <div
       className="flex flex-col min-h-screen bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url(${require('../images/auction1.jpg')})`,
+        backgroundImage: `url(${require("../images/auction1.jpg")})`,
       }}
     >
       {/* Navbar */}
       <nav className="bg-blue-600 p-4 w-full">
-        <div className="flex justify-between items-center max-w-screen-xl mx-auto px-4">
-          <h1 className="text-white text-3xl font-bold">Mnada Auctions</h1>
+        <div className="flex justify-between items-center max-w-screen-xl mx-auto">
+          <h1 className="text-white text-3xl font-bold ml-0">Mnada Auctions</h1>
           <ul className="flex space-x-6 text-white">
             <li>
               <a href="/" className="hover:text-gray-300">
                 Home
+              </a>
+            </li>
+            <li>
+              <a href="/about-us" className="hover:text-gray-300">
+                About Us
               </a>
             </li>
           </ul>
