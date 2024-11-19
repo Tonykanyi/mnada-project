@@ -160,7 +160,7 @@ const Authentication = ({ setUserRole }) => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-blue-900 py-4 text-center text-white w-full">
+      <footer className="bg-blue-800 py-4 text-center text-white w-full">
         <p>&copy; 2024 Mnada Auctions. All rights reserved.</p>
       </footer>
     </div>
