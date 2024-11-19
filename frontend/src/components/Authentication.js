@@ -82,15 +82,22 @@ const Authentication = ({ setUserRole }) => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url("https://img.freepik.com/free-photo/wooden-gavel_93675-130185.jpg?ga=GA1.1.1419067999.1731578327&semt=ais_hybrid")' }}>
+    <div
+      className="flex flex-col min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${require('../images/auction1.jpg')})`,
+      }}
+    >
       {/* Navbar */}
       <nav className="bg-blue-600 p-4 w-full">
         <div className="flex justify-between items-center max-w-screen-xl mx-auto px-4">
           <h1 className="text-white text-3xl font-bold">Mnada Auctions</h1>
           <ul className="flex space-x-6 text-white">
-            <li><a href="/" className="hover:text-gray-300">Home</a></li>
-            <li><a href="/about" className="hover:text-gray-300">About</a></li>
-            <li><a href="/contact" className="hover:text-gray-300">Contact</a></li>
+            <li>
+              <a href="/" className="hover:text-gray-300">
+                Home
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
@@ -98,7 +105,9 @@ const Authentication = ({ setUserRole }) => {
       {/* Authentication Form */}
       <div className="flex-grow flex justify-center items-center">
         <div className="bg-white p-6 rounded-lg shadow-lg w-80 transition duration-300 ease-in-out transform hover:scale-105 hover:opacity-80 hover:bg-opacity-90">
-          <h2 className="text-xl font-bold mb-4 text-center">{isLoginMode ? "Login" : "Register"}</h2>
+          <h2 className="text-xl font-bold mb-4 text-center">
+            {isLoginMode ? "Login" : "Register"}
+          </h2>
           {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
           <form onSubmit={isLoginMode ? handleLogin : handleRegister}>
             <input
@@ -106,7 +115,9 @@ const Authentication = ({ setUserRole }) => {
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className={`w-full p-2 border mb-4 ${loading ? "bg-gray-100" : ""}`}
+              className={`w-full p-2 border mb-4 ${
+                loading ? "bg-gray-100" : ""
+              }`}
               required
               disabled={loading}
             />
@@ -116,7 +127,9 @@ const Authentication = ({ setUserRole }) => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`w-full p-2 border mb-4 ${loading ? "bg-gray-100" : ""}`}
+                className={`w-full p-2 border mb-4 ${
+                  loading ? "bg-gray-100" : ""
+                }`}
                 required
                 disabled={loading}
               />
@@ -126,7 +139,9 @@ const Authentication = ({ setUserRole }) => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full p-2 border mb-4 ${loading ? "bg-gray-100" : ""}`}
+              className={`w-full p-2 border mb-4 ${
+                loading ? "bg-gray-100" : ""
+              }`}
               required
               disabled={loading}
             />
@@ -134,7 +149,9 @@ const Authentication = ({ setUserRole }) => {
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className={`w-full p-2 border mb-4 ${loading ? "bg-gray-100" : ""}`}
+                className={`w-full p-2 border mb-4 ${
+                  loading ? "bg-gray-100" : ""
+                }`}
                 disabled={loading}
               >
                 <option value="client">Client</option>
@@ -144,17 +161,27 @@ const Authentication = ({ setUserRole }) => {
             )}
             <button
               type="submit"
-              className={`w-full py-2 rounded ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"}`}
+              className={`w-full py-2 rounded ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 text-white hover:bg-blue-700"
+              }`}
               disabled={loading}
             >
-              {loading ? "Processing..." : isLoginMode ? "Login" : "Register"}
+              {loading
+                ? "Processing..."
+                : isLoginMode
+                ? "Login"
+                : "Register"}
             </button>
           </form>
           <button
             onClick={() => setIsLoginMode(!isLoginMode)}
             className="text-blue-500 mt-4 w-full text-center"
           >
-            {isLoginMode ? "Don't have an account? Register" : "Already have an account? Login"}
+            {isLoginMode
+              ? "Don't have an account? Register"
+              : "Already have an account? Login"}
           </button>
         </div>
       </div>
