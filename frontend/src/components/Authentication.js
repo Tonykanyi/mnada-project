@@ -19,13 +19,13 @@ const Authentication = ({ setUserRole }) => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${BASE_URL}/auth/login`, {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: username.trim(),
+          email: username.trim(),
           password: password.trim(),
         }),
       });
@@ -37,10 +37,11 @@ const Authentication = ({ setUserRole }) => {
       }
 
       const data = await response.json();
-      localStorage.setItem("access_token", data.token);
-      localStorage.setItem("user_role", data.role);
-      setUserRole(data.role);
-      navigate(`/${data.role}-dashboard`);
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("user_role", data.user_data.role);
+      console.log(data)
+      setUserRole(data.user_data.role);
+      navigate(`/${data.user_data.role}-dashboard`);
     } catch (error) {
       setError("An error occurred during login. Please try again.");
     } finally {
