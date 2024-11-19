@@ -84,7 +84,7 @@ const Authentication = ({ setUserRole }) => {
   return (
     <div className="flex flex-col min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url("https://img.freepik.com/free-photo/wooden-gavel_93675-130185.jpg?ga=GA1.1.1419067999.1731578327&semt=ais_hybrid")' }}>
       {/* Navbar */}
-      <nav className="bg-blue-800 p-4 w-full">
+      <nav className="bg-blue-600 p-4 w-full">
         <div className="flex justify-between items-center max-w-screen-xl mx-auto px-4">
           <h1 className="text-white text-3xl font-bold">Mnada Auctions</h1>
           <ul className="flex space-x-6 text-white">
