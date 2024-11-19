@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import auctionData from '../data/AuctionData';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = ({ userRole, handleLogout }) => {
   const [selectedAuction, setSelectedAuction] = useState(null);
+  const navigate = useNavigate();
 
   const handleSelectAuction = (item) => {
     setSelectedAuction(item);
+  };
+
+  const handleJoinAuction = () => {
+    navigate('/login'); // Redirect to Authentication.js
   };
 
   return (
@@ -16,7 +22,7 @@ const HomePage = ({ userRole, handleLogout }) => {
 
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-10 tracking-tight">
-          Featured Auctions
+          Ongoing Auctions
         </h2>
 
         {!selectedAuction ? (
@@ -30,7 +36,11 @@ const HomePage = ({ userRole, handleLogout }) => {
             ))}
           </div>
         ) : (
-          <AuctionDetail auction={selectedAuction} onBack={() => setSelectedAuction(null)} />
+          <AuctionDetail
+            auction={selectedAuction}
+            onBack={() => setSelectedAuction(null)}
+            onJoinAuction={handleJoinAuction}
+          />
         )}
       </div>
     </div>
@@ -57,7 +67,7 @@ const AuctionCard = ({ item, onSelect }) => (
   </div>
 );
 
-const AuctionDetail = ({ auction, onBack }) => {
+const AuctionDetail = ({ auction, onBack, onJoinAuction }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleNextImage = () => {
@@ -73,12 +83,12 @@ const AuctionDetail = ({ auction, onBack }) => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-3xl mx-auto mt-8 p-8 border border-gray-200">
-      <button onClick={onBack} className="text-blue-600 text-sm font-medium mb-4 hover:underline">
-        &lt; Back to Auctions
-      </button>
-      <div className="relative mb-6">
-        {/* Carousel for selected auction */}
+    <div
+      className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white shadow-lg rounded-lg p-8 border border-gray-200"
+      style={{ minHeight: '675px' }}
+    >
+      {/* Carousel */}
+      <div className="relative">
         <div className="flex overflow-hidden relative">
           <div
             className="flex transition-transform duration-500 ease-in-out"
@@ -89,13 +99,11 @@ const AuctionDetail = ({ auction, onBack }) => {
                 key={index}
                 src={image}
                 alt={auction.title}
-                className="w-full h-80 object-cover rounded-md"
+                className="w-full h-[28rem] object-cover rounded-md"
               />
             ))}
           </div>
         </div>
-        
-        {/* Carousel navigation buttons */}
         <button
           onClick={handlePrevImage}
           className="absolute top-1/2 left-3 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 transition"
@@ -108,8 +116,6 @@ const AuctionDetail = ({ auction, onBack }) => {
         >
           &gt;
         </button>
-
-        {/* Image indicators */}
         <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
           {auction.images.map((_, index) => (
             <div
@@ -121,17 +127,69 @@ const AuctionDetail = ({ auction, onBack }) => {
           ))}
         </div>
       </div>
-      
-      <div className="text-gray-900">
+
+      {/* Auction Details */}
+      <div>
+        <button
+          onClick={onBack}
+          className="inline-flex items-center text-blue-600 text-sm font-semibold mb-6 hover:underline hover:text-blue-800 transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-5 h-5 mr-2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+            />
+          </svg>
+          Back to Auctions
+        </button>
         <h3 className="text-2xl font-bold mb-2">{auction.title}</h3>
-        <p className="text-gray-700 mb-6">{auction.shortDescription}</p>
-        <div className="flex justify-between items-center mt-4 border-t border-gray-200 pt-4">
-          <p className="text-lg font-semibold">Current Bid: ${auction.currentBid}</p>
-          <p className="text-gray-500 text-sm">Auction ends: {auction.endDate}</p>
+        <p className="text-gray-700 mb-4">{auction.description}</p>
+        <div className="flex flex-col space-y-2">
+          <p>
+            <strong>Starting Bid:</strong> ${auction.startingBid}
+          </p>
+          <p>
+            <strong>Category:</strong> {auction.category}
+          </p>
+          <p>
+            <strong>Posted By:</strong> {auction.postedBy}
+          </p>
+          <p>
+            <strong>Number of Bidders:</strong> {auction.numberOfBidders}
+          </p>
+          <p>
+            <strong>Auction Ends On:</strong>{' '}
+            {new Date(auction.endDate).toLocaleString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </p>
+        </div>
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={onJoinAuction}
+            className="bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 transition"
+            style={{ width: '33%' }}
+          >
+            Join Auction
+          </button>
         </div>
       </div>
     </div>
   );
 };
+
 
 export default HomePage;
