@@ -7,7 +7,6 @@ const Authentication = ({ setUserRole }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("client");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -59,7 +58,12 @@ const Authentication = ({ setUserRole }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password, role }),
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          role: "client", // Default role
+        }),
       });
 
       if (!response.ok) {
@@ -73,7 +77,6 @@ const Authentication = ({ setUserRole }) => {
       setUsername("");
       setEmail("");
       setPassword("");
-      setRole("client");
     } catch (error) {
       setError("An error occurred. Please try again.");
     } finally {
@@ -150,20 +153,6 @@ const Authentication = ({ setUserRole }) => {
               required
               disabled={loading}
             />
-            {!isLoginMode && (
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className={`w-full p-2 border mb-4 ${
-                  loading ? "bg-gray-100" : ""
-                }`}
-                disabled={loading}
-              >
-                <option value="client">Client</option>
-                <option value="auctioneer">Auctioneer</option>
-                <option value="admin">Admin</option>
-              </select>
-            )}
             <button
               type="submit"
               className={`w-full py-2 rounded ${
@@ -197,6 +186,7 @@ const Authentication = ({ setUserRole }) => {
       </footer>
     </div>
   );
+
 };
 
 export default Authentication;
