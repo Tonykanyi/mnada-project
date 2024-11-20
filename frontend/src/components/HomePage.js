@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from './Navbar';
 import auctionData from '../data/AuctionData';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,9 +16,6 @@ const HomePage = ({ userRole, handleLogout }) => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      {/* Navbar */}
-      <Navbar userRole={userRole} handleLogout={handleLogout} />
-
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-10 tracking-tight">
           Ongoing Auctions
@@ -190,6 +186,5 @@ const AuctionDetail = ({ auction, onBack, onJoinAuction }) => {
     </div>
   );
 };
-
 
 export default HomePage;

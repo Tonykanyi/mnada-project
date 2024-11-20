@@ -40,7 +40,8 @@ const App = () => {
   return (
     <Router>
       <div className="min-h-screen bg-gray-100">
-        {userRole && <Navbar userRole={userRole} handleLogout={handleLogout} />}
+        {/* Navbar is now rendered globally in App.js */}
+        <Navbar userRole={userRole} handleLogout={handleLogout} />
 
         <main className="mx-auto">
           <Routes>
@@ -54,7 +55,7 @@ const App = () => {
               path="/login"
               element={
                 userRole ? (
-                  <Navigate to={`/${userRole}-dashboard`} />
+                  <Navigate to={`/${userRole}-dashboard`} /> // Redirect to specific dashboard based on user role
                 ) : (
                   <Authentication setUserRole={setUserRole} />
                 )
