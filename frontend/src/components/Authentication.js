@@ -91,25 +91,6 @@ const Authentication = ({ setUserRole }) => {
         backgroundImage: `url(${require("../images/auction1.jpg")})`,
       }}
     >
-      {/* Navbar */}
-      <nav className="bg-blue-600 p-4 w-full">
-        <div className="flex justify-between items-center max-w-screen-xl mx-auto">
-          <h1 className="text-white text-3xl font-bold ml-0">Mnada Auctions</h1>
-          <ul className="flex space-x-6 text-white">
-            <li>
-              <a href="/" className="hover:text-gray-300">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="/about-us" className="hover:text-gray-300">
-                About Us
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
       {/* Authentication Form */}
       <div className="flex-grow flex justify-center items-center">
         <div className="bg-white p-6 rounded-lg shadow-lg w-80 transition duration-300 ease-in-out transform hover:scale-105 hover:opacity-80 hover:bg-opacity-90">
@@ -162,11 +143,7 @@ const Authentication = ({ setUserRole }) => {
               }`}
               disabled={loading}
             >
-              {loading
-                ? "Processing..."
-                : isLoginMode
-                ? "Login"
-                : "Register"}
+              {loading ? "Processing..." : isLoginMode ? "Login" : "Register"}
             </button>
           </form>
           <button
@@ -186,7 +163,6 @@ const Authentication = ({ setUserRole }) => {
       </footer>
     </div>
   );
-
 };
 
 export default Authentication;
