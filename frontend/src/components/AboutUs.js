@@ -4,13 +4,7 @@ import { Link } from 'react-router-dom';
 const AboutUs = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-blue-600 py-10">
-        <h1 className="text-white text-4xl font-extrabold text-center">
-          About Mnada Auctions
-        </h1>
-      </header>
-
+      
       {/* Main Content */}
       <main className="flex-grow container mx-auto px-6 py-12">
         <section className="mb-12">
@@ -49,23 +43,7 @@ const AboutUs = () => {
             methods. With innovation, trust, and customer satisfaction as our core
             values, we aim to revolutionize the auction industry.
           </p>
-        </section>
-
-        {/* Links to HomePage and Authentication */}
-        <section className="mt-12 flex flex-col items-center space-y-4">
-          <Link
-            to="/"
-            className="text-blue-600 text-lg font-semibold hover:underline"
-          >
-            Go to HomePage
-          </Link>
-          <Link
-            to="/login"
-            className="text-blue-600 text-lg font-semibold hover:underline"
-          >
-            Go to Login/Register
-          </Link>
-        </section>
+        </section>        
       </main>
 
       {/* Footer */}

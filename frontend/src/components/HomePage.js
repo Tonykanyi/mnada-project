@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from './Navbar';
 import auctionData from '../data/AuctionData';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,14 +11,18 @@ const HomePage = ({ userRole, handleLogout }) => {
   };
 
   const handleJoinAuction = () => {
-    navigate('/login'); // Redirect to Authentication.js
+    if (selectedAuction) {
+      // Store the selected auction in localStorage
+      localStorage.setItem('selectedAuction', JSON.stringify(selectedAuction));
+      // Redirect to login/registration page
+      navigate('/login');
+    } else {
+      alert('Please select an auction to join.');
+    }
   };
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      {/* Navbar */}
-      <Navbar userRole={userRole} handleLogout={handleLogout} />
-
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-10 tracking-tight">
           Ongoing Auctions
@@ -154,7 +157,7 @@ const AuctionDetail = ({ auction, onBack, onJoinAuction }) => {
         <p className="text-gray-700 mb-4">{auction.description}</p>
         <div className="flex flex-col space-y-2">
           <p>
-            <strong>Starting Bid:</strong> ${auction.startingBid}
+            <strong>Starting Bid:</strong> Ksh {auction.startingBid}
           </p>
           <p>
             <strong>Category:</strong> {auction.category}
@@ -190,6 +193,5 @@ const AuctionDetail = ({ auction, onBack, onJoinAuction }) => {
     </div>
   );
 };
-
 
 export default HomePage;
