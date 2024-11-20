@@ -10,8 +10,15 @@ const AuctioneerDashboard = () => {
   const [startingBid, setStartingBid] = useState('');
   const [category, setCategory] = useState('');
   const [items, setItems] = useState([]); // List of auction items
-
-
+  const [selectedAuction,setSelectedAuction]=useState("")
+  const [auctions,setAuctions]=useState([])
+console.log(auctions)
+  //fetch auctions data
+  useEffect(()=>{
+    fetch(`${BASE_URL}/auctions`)
+    .then(res=>res.json())
+    .then(data=>setAuctions(data))
+  },[])
   // Categories for auction items
   const categories = [
     'Motor Vehicles',
@@ -43,19 +50,23 @@ const AuctioneerDashboard = () => {
   const handleAddItem = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
     // Validate image count
     if (itemImages.length < 1 || itemImages.length > 10) {
       alert('Please upload between 1 and 10 images.');
       return;
     }
+    for(let i=0;i<itemImages.length; i++){
+      formData.append('file',itemImages[i].file)
+    }
+    const item_data={
+      'title': itemName,
+      'description': itemDescription,
+      'starting_price': startingBid,
+      "auction_id":1
 
-    const formData = new FormData();
-    formData.append('image_url', itemImages); // Assuming image data will be uploaded to the backend separately
-    formData.append('title', itemName);
-    formData.append('description', itemDescription);
-    formData.append('starting_price', startingBid);
-    formData.append('category', category);
-    formData.append('posted_by', 1); // Assuming the current user ID is 1
+    }
+    formData.append('item_data',JSON.stringify(item_data))
 
     try {
       const response = await axios.post(`${BASE_URL}/items/item`, formData);
@@ -76,12 +87,15 @@ const AuctioneerDashboard = () => {
 
   // Handle image selection
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 10) {
+    const newFiles = Array.from(e.target.files);
+    const updatedFiles = [...itemImages, ...newFiles];
+
+    if (updatedFiles.length > 10) {
       alert('You can upload a maximum of 10 images.');
       return;
     }
-    setItemImages(files);
+
+    setItemImages(updatedFiles);
   };
 
   return (
@@ -92,17 +106,44 @@ const AuctioneerDashboard = () => {
       <div className="mt-6">
         <h2 className="text-2xl font-medium">Add Item to Auction</h2>
         <form onSubmit={handleAddItem} className="mt-4">
-          <div className="mb-4">
-            <label htmlFor="itemName" className="block text-lg font-medium">Item Name</label>
-            <input
-              type="text"
-              id="itemName"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
-              className="hover:shadow-lg w-full p-2 border border-gray-300 rounded mt-2"
-              required
-            />
-          </div>
+        <div className="mb-4 flex space-x-4">
+  {/* Item Name Field */}
+  <div className="flex-1">
+    <label htmlFor="itemName" className="block text-lg font-medium">
+      Item Name
+    </label>
+    <input
+      type="text"
+      id="itemName"
+      value={itemName}
+      onChange={(e) => setItemName(e.target.value)}
+      className="hover:shadow-lg w-full p-2 border border-gray-300 rounded mt-2"
+      required
+    />
+  </div>
+
+  {/* Auction Dropdown */}
+  <div className="flex-1">
+    <label htmlFor="auctionSelect" className="block text-lg font-medium">
+      Auction
+    </label>
+    <select
+      id="auctionSelect"
+      value={selectedAuction}
+      onChange={(e) => console.log(e.target.value)}
+      className="hover:shadow-lg w-full p-2 border border-gray-300 rounded mt-2"
+      required
+    >
+      <option value="">Select an Auction</option>
+      {auctions.map((auction) => (
+        <option key={auction.id} value={auction.id}>
+          {auction.id}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
+
 
           <div className="mb-4">
             <label htmlFor="itemDescription" className="block text-lg font-medium">Item Description</label>
@@ -141,7 +182,7 @@ const AuctioneerDashboard = () => {
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label htmlFor="category" className="block text-lg font-medium">Category</label>
             <select
               id="category"
@@ -157,7 +198,7 @@ const AuctioneerDashboard = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <button type="submit" className="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Add Item</button>
         </form>
