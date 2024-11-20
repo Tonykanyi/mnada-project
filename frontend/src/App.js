@@ -8,6 +8,9 @@ import AuctioneerDashboard from "./pages/AuctioneerDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import AboutUs from "./components/AboutUs"; // Import the AboutUs component
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const App = () => {
   const [userRole, setUserRole] = useState(null);
@@ -38,6 +41,8 @@ const App = () => {
   };
 
   return (
+    <>
+    <ToastContainer />
     <Router>
       <div className="min-h-screen bg-gray-100">
         {/* Navbar is now rendered globally in App.js */}
@@ -88,6 +93,8 @@ const App = () => {
         </main>
       </div>
     </Router>
+    </>
+
   );
 };
 

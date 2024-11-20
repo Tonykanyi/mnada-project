@@ -11,7 +11,14 @@ const HomePage = ({ userRole, handleLogout }) => {
   };
 
   const handleJoinAuction = () => {
-    navigate('/login'); // Redirect to Authentication.js
+    if (selectedAuction) {
+      // Store the selected auction in localStorage
+      localStorage.setItem('selectedAuction', JSON.stringify(selectedAuction));
+      // Redirect to login/registration page
+      navigate('/login');
+    } else {
+      alert('Please select an auction to join.');
+    }
   };
 
   return (
@@ -150,7 +157,7 @@ const AuctionDetail = ({ auction, onBack, onJoinAuction }) => {
         <p className="text-gray-700 mb-4">{auction.description}</p>
         <div className="flex flex-col space-y-2">
           <p>
-            <strong>Starting Bid:</strong> ${auction.startingBid}
+            <strong>Starting Bid:</strong> Ksh {auction.startingBid}
           </p>
           <p>
             <strong>Category:</strong> {auction.category}

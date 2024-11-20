@@ -16,7 +16,6 @@ const AuctionList = () => {
           <p className="text-gray-600">Starting Price: {auction.startingPrice}</p>
         </div>
       ))}
-    
     </>
   );
 };
